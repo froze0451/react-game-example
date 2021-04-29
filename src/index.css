@@ -11,3 +11,210 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/*general*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  margin: 15px 15% 0 15%;
+}
+
+/*greetings page*/
+.greetings-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.hidden-input {
+  visibility: hidden;
+}
+
+.custom-file-label {
+  color: white;
+  text-align: center;
+  padding-top: 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+  height: 70px;
+  width: 200px;
+  background-color: DeepSkyBlue;
+  border: 2px solid DodgerBlue;
+  border-radius: 5px;
+}
+
+/*character creation page*/
+.creation-page {
+  min-width: 762px;
+}
+
+.creation-page-title {
+  text-align: center;
+}
+
+.character-creation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.avatar {
+  background: url('./avatar.jpg');
+  height: 300px;
+  width: 400px;
+  background-size: cover;
+}
+
+.change-page-anchors {
+  /*visibility: hidden;*/
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 400px;
+}
+
+.change-page-anchors a {
+  height: 40px;
+  width: 150px;
+  background-color: CornflowerBlue;
+  text-align: center;
+  padding-top: 8px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+/*div[title]:hover::after {
+  content: attr(title);
+  position: fixed;
+  top: 395px;
+  left: 202px;
+  font-size: 1em;
+  color: purple;
+  width: 400px;
+}*/
+
+.creation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 252px;
+}
+
+.name-creation-field {
+  height: 30px;
+  width: 200px;
+  background-color: Bisque;
+  border: 1px solid Chocolate;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.points span {
+  font-size: 20px;
+  color: blue;
+}
+
+/*atributes*/
+.atributes {
+  display: flex;
+  flex-direction: column;
+}
+
+.atribute {
+  height: 40px;
+  width: 200px;
+  background-color: Bisque;
+  border: 1px solid Chocolate;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 20px;
+}
+
+.atribute > p {
+  margin: 0 auto;
+}
+
+.atribute-button-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 60px;
+}
+
+.atribute-button-section button {
+  width: 13px;
+  height: 13px;
+  background: transparent;
+  border: 4px solid grey;
+  border-bottom: none;
+  border-left: none;
+  transform: rotate(-135deg);
+  cursor: pointer;
+  outline: none;
+}
+
+.atribute-button-section button:last-of-type {
+  transform: rotate(45deg);
+}
+
+/*additional atributes*/
+.additional-atribute {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 40px;
+  width: 200px;
+  background-color: Bisque;
+  border: 1px solid Chocolate;
+  border-radius: 5px;
+  padding-left: 5px;
+  padding-right: 10px;
+}
+
+.additional-atribute-stats > p {
+  width: 18px;
+  text-align: center;
+  font-size: 17px;
+}
+
+.additional-atribute-stats {
+  display: flex;
+  flex-direction: row;
+  width: 54px;
+}
+
+/*description*/
+.description {
+  margin-top: 20px;
+  height: 100px;
+  width: 400px;
+  background-color: Bisque;
+  border: 1px solid Chocolate;
+  border-radius: 5px;
+}
+
+/*submit charachter*/
+.submit-button {
+  cursor: pointer;
+  color: white;
+  font-size: 20px;
+  margin-top: 10px;
+  height: 50px;
+  width: 120px;
+  background-color: LimeGreen;
+  border: 1px solid green;
+  border-radius: 5px;
+}
