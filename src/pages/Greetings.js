@@ -29,10 +29,13 @@ function Greetings() {
 
   return (
     <div className="greetings-page">
-      <h2>Добро пожаловать в абстрактную рпг игру!</h2>
-      <a className="greetings-to-creation" href="/creation">Создать нового персонажа</a>
-      <input type="file" className="hidden-input" id="file" onChange={(event) => printFile(event)} />
-      <label htmlFor="file" className="custom-file-label">Импортировать персонажа</label>
+      <h2 className="greetings-title">Добро пожаловать в абстрактную рпг игру!</h2>
+      <div className="greetings-buttons-panel">
+        <a className="greetings-to-creation" href="/creation">Создать нового персонажа</a>
+        <input type="file" className="hidden-input" id="file" onChange={(event) => printFile(event)} />
+        <label htmlFor="file" className="custom-file-label">Импортировать персонажа</label>
+      </div>
+
       <div>{"uploaded file is: " + (uploadedStats !== undefined ? (function ha() { for (const [key, value] of Object.entries(uploadedStats)) { return (`${key}: ${value}`) } })() : "not uploaded yet")}</div>
       <button onClick={() => console.log(uploadedStats)}>Чекнуть в консоли загруженные объект</button>
     </div>

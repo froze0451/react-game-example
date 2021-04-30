@@ -1,5 +1,5 @@
-import React from 'react'
-import Atribute from '../components/Atribute'
+import React from "react"
+import Atribute from "../components/Atribute"
 
 /*import AtributeButton from '../components/AtributeButton'*/
 
@@ -17,7 +17,7 @@ class CharacterCreation extends React.Component {
       agility: 0,
       intelligence: 0,
       charisma: 0,
-      name: '',
+      name: "",
     }
     this.plusPoint = this.plusPoint.bind(this)
     this.minusPoint = this.minusPoint.bind(this)
@@ -49,35 +49,25 @@ class CharacterCreation extends React.Component {
     }
   }
 
-  changeName(e) {
-    this.setState({ name: e.target.value })
-  }
+
+
 
   createCharacter() {
-    if (this.state.pointsToSpend > 0 && this.state.name === '') {
+    if (this.state.pointsToSpend > 0 && this.state.name === "") {
       alert(
-        'Для создания персонажа необходимо сначала распределить очки между базовыми параметрами и дать имя персонажу'
+        "Для создания персонажа необходимо сначала распределить очки между базовыми параметрами и дать имя персонажу"
       )
-    } else if (this.state.pointsToSpend > 0 && this.state.name !== '') {
+    } else if (this.state.pointsToSpend > 0 && this.state.name !== "") {
       alert(
-        'Для создания персонажа необходимо сначала распределить очки между базовыми параметрами'
+        "Для создания персонажа необходимо сначала распределить очки между базовыми параметрами"
       )
-    } else if (this.state.pointsToSpend === 0 && this.state.name === '') {
-      alert('Для создания персонажа необходимо сначала дать ему имя')
+    } else if (this.state.pointsToSpend === 0 && this.state.name === "") {
+      alert("Для создания персонажа необходимо сначала дать ему имя")
     } else {
-      alert('Персонаж успешно создан!')
+      alert("Персонаж успешно создан!")
     }
-    /*if (this.state.pointsToSpend > 0) {
-      alert('Для создания персонажа необходимо сначала распределить очки между базовыми параметрами')
-    } else {
-      alert('Персонаж успешно создан!')
-    }*/
-    /*if (this.state.name === "") {
-      console.log('haha')
-    } else {
-      console.log('ok')
-    }*/
   }
+
 
   render() {
     return (
@@ -87,7 +77,8 @@ class CharacterCreation extends React.Component {
         </h2>
         <div className="character-creation">
           <div className="avatar-and-description">
-            <div className="avatar" title="Это ваш герой"></div>
+            <div className="avatar" title="Это ваш герой">
+            </div>
             <div className="description"></div>
             <div className="change-page-anchors">
               <a href="/">Hа главную</a>
@@ -104,7 +95,7 @@ class CharacterCreation extends React.Component {
             ></input>
             <h5>Базовые параметры</h5>
             <div className="points">
-              Осталось распределить очков:{' '}
+              Осталось распределить очков:{" "}
               <span>{this.state.pointsToSpend}</span>
             </div>
             <div className="atributes">
@@ -146,10 +137,10 @@ class CharacterCreation extends React.Component {
                   <p>&gt;</p>
                   <p
                     style={{
-                      color: this.state.strength > 0 ? 'blue' : 'black',
+                      color: this.state.strength > 0 ? "blue" : "black",
                     }}
                   >
-                    {this.state.strength + 3}
+                    {3 + this.state.strength}
                   </p>
                 </div>
               </div>
@@ -159,7 +150,7 @@ class CharacterCreation extends React.Component {
                   <p>10</p>
                   <p>&gt;</p>
                   <p
-                    style={{ color: this.state.agility > 0 ? 'blue' : 'black' }}
+                    style={{ color: this.state.agility > 0 ? "blue" : "black" }}
                   >
                     {10 + this.state.agility}
                   </p>
@@ -174,8 +165,8 @@ class CharacterCreation extends React.Component {
                     style={{
                       color:
                         this.state.agility + this.state.intelligence > 0
-                          ? 'blue'
-                          : 'black',
+                          ? "blue"
+                          : "black",
                     }}
                   >
                     {this.state.agility + this.state.intelligence}
