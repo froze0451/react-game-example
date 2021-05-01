@@ -21,6 +21,8 @@ class CharacterCreation extends React.Component {
     }
     this.plusPoint = this.plusPoint.bind(this)
     this.minusPoint = this.minusPoint.bind(this)
+    this.storingCharacter = this.storingCharacter.bind(this)
+    this.createCharacter = this.createCharacter.bind(this)
   }
 
   plusPoint(atribute) {
@@ -49,8 +51,18 @@ class CharacterCreation extends React.Component {
     }
   }
 
+  changeName(e) {
+    this.setState({ name: e.target.value })
+  }
 
-
+  storingCharacter() {
+    const { name, strength, agility, intelligence, charisma } = this.state;
+    sessionStorage.setItem('name', name)
+    sessionStorage.setItem('strength', strength)
+    sessionStorage.setItem('agility', agility)
+    sessionStorage.setItem('intelligence', intelligence)
+    sessionStorage.setItem('charisma', charisma)
+  }
 
   createCharacter() {
     if (this.state.pointsToSpend > 0 && this.state.name === "") {
@@ -64,6 +76,7 @@ class CharacterCreation extends React.Component {
     } else if (this.state.pointsToSpend === 0 && this.state.name === "") {
       alert("Для создания персонажа необходимо сначала дать ему имя")
     } else {
+      this.storingCharacter()
       alert("Персонаж успешно создан!")
     }
   }
@@ -176,15 +189,15 @@ class CharacterCreation extends React.Component {
             </div>
             <button
               className="submit-button"
-              /*onClick={() => console.log(this.state)}*/ onClick={() =>
-                this.createCharacter()
-              }
+              /*onClick={() => console.log(this.state)}*/ /*onClick={() =>
+                this.createCharacter()*/ onClick={this.createCharacter}
+
             >
               Создать
             </button>
           </div>
         </div>
-      </div>
+      </div >
     )
   }
 }

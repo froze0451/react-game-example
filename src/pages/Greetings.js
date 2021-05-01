@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 function Greetings() {
 
@@ -14,17 +14,21 @@ function Greetings() {
     };
     reader.readAsText(file);
   }*/
-  const [uploadedStats, setUploadedStats] = useState()
+  /*const [uploadedStats, setUploadedStats] = useState()*/
 
+  /*
+    function printFile(event) {
+      let file = event.target.files[0];
+      let reader = new FileReader();
+      reader.onload = function (event) {
+        setUploadedStats(JSON.parse(event.target.result))
+        console.log(uploadedStats)
+      };
+      reader.readAsText(file);
+    }*/
 
-  function printFile(event) {
-    let file = event.target.files[0];
-    let reader = new FileReader();
-    reader.onload = function (event) {
-      setUploadedStats(JSON.parse(event.target.result))
-      console.log(uploadedStats)
-    };
-    reader.readAsText(file);
+  function clearStorage() {
+    localStorage.clear()
   }
 
   return (
@@ -32,12 +36,11 @@ function Greetings() {
       <h2 className="greetings-title">Добро пожаловать в абстрактную рпг игру!</h2>
       <div className="greetings-buttons-panel">
         <a className="greetings-to-creation" href="/creation">Создать нового персонажа</a>
-        <input type="file" className="hidden-input" id="file" onChange={(event) => printFile(event)} />
-        <label htmlFor="file" className="custom-file-label">Импортировать персонажа</label>
+        <input type="file" className="hidden-input" id="file" /*onChange={(event) => printFile(event)}*/ />
+        <label htmlFor="file" className="custom-file-label" onClick={clearStorage}>Импортировать персонажа</label>
       </div>
 
-      <div>{"uploaded file is: " + (uploadedStats !== undefined ? (function ha() { for (const [key, value] of Object.entries(uploadedStats)) { return (`${key}: ${value}`) } })() : "not uploaded yet")}</div>
-      <button onClick={() => console.log(uploadedStats)}>Чекнуть в консоли загруженные объект</button>
+
     </div>
   )
 }

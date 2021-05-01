@@ -308,6 +308,11 @@ code {
 
 .character-name {
   text-align: center;
+  margin-bottom: 10px;
+}
+
+.actions {
+  width: 320px;
 }
 
 .fighting {
@@ -318,7 +323,7 @@ code {
 
 .save-progress {
   height: 100px;
-  width: 200px;
+  width: 160px;
   background: GoldenRod;
   border-radius: 15px;
   font-size: 24px;
@@ -345,7 +350,8 @@ code {
 }
 
 .actions .description {
-  width: 350px;
+  width: 320px;
+  height: 60px;
 }
 
 .skills-section {

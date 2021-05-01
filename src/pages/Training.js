@@ -4,15 +4,55 @@ class Training extends React.Component {
   constructor() {
     super()
     this.state = {
-      name: "Альфонс Элрик",
+      name: "",
       strength: 0,
       agility: 0,
       intelligence: 0,
       charisma: 0,
+      skillPoints: 0
+    }
+    this.saveCharacter = this.saveCharacter.bind(this)
+  }
+
+  componentDidMount() {
+    if (localStorage.length !== 0) {
+      this.setState({
+        name: localStorage.getItem('name'),
+        strength: Number(localStorage.getItem('strength')),
+        agility: Number(localStorage.getItem('agility')),
+        intelligence: Number(localStorage.getItem('intelligence')),
+        charisma: Number(localStorage.getItem('charisma'))
+      })
+    } else {
+      this.setState({
+        name: sessionStorage.getItem('name'),
+        strength: Number(sessionStorage.getItem('strength')),
+        agility: Number(sessionStorage.getItem('agility')),
+        intelligence: Number(sessionStorage.getItem('intelligence')),
+        charisma: Number(sessionStorage.getItem('charisma'))
+      })
     }
   }
 
+
+  saveCharacter() {
+    const { name, strength, agility, intelligence, charisma, skillPoints } = this.state;
+    localStorage.setItem('name', name)
+    localStorage.setItem('strength', strength)
+    localStorage.setItem('agility', agility)
+    localStorage.setItem('intelligence', intelligence)
+    localStorage.setItem('charisma', charisma)
+    localStorage.setItem('skillPoints', skillPoints)
+  }
+
+  checkLocal() {
+    console.log('sessionStorage length: ', sessionStorage.length)
+    console.log('localStorage length: ', localStorage.length)
+  }
+
   render() {
+    /*const stars = ["&#10032;", "&#10025;", "&#10028;", "&#10030;", "&#10031;"]
+    const hmm = "&#10032;"*/
     return (
       <div className="training-page">
         <h2 className="training-title">Теперь вы готовы проводить поединки и прокачивать скиллы!</h2>
@@ -59,16 +99,16 @@ class Training extends React.Component {
             <div className="actions">
               <h3 className="character-name">{this.state.name}</h3>
               <div className="fighting">
-                <div className="save-progress">СОХРАНИТЬ ПРОГРЕСС</div>
-                <div className="fight-button">ДРАКА!</div>
+                <div className="save-progress" onClick={this.saveCharacter}>СОХРАНИТЬ ПРОГРЕСС</div>
+                <div className="fight-button" onClick={this.checkLocal}>ДРАКА!</div>
               </div>
               <div className="description"></div>
             </div>
             <div className="skills-section">
-              <h3 className="skills-title">Скилы</h3>
+              <h3 className="skills-title">Скиллы</h3>
               <div className="skill-points">
                 Доступные очки улучшения:{" "}
-                <span>{1}</span>
+                <span>{this.state.skillPoints}</span>
               </div>
               <div className="skills-content">
                 <div className="skills-first-column skills">
@@ -120,7 +160,7 @@ class Training extends React.Component {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     )
   }
 }
