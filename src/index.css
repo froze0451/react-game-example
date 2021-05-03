@@ -40,34 +40,30 @@ code {
   justify-content: space-between;
 }
 
-.greetings-to-creation {
+.greetings-anchor {
   text-decoration: none;
-  color: white;
+  user-select: none;
+  color: Gold;
   text-align: center;
   padding-top: 10px;
   text-transform: uppercase;
-  cursor: pointer;
-  height: 70px;
-  width: 200px;
-  background-color: LightGreen;
-  border: 2px solid MediumSeaGreen;
-  border-radius: 5px;
+
+  height: 120px; /*70px*/
+  width: 300px; /*200*/
+  background-color: CornflowerBlue;
+  border: 2px solid BlueViolet;
+  border-radius: 10px;
+  padding-top: 46px;
+  font-size: 18px;
 }
 
 .hidden-input {
   display: none;
 }
 
-.custom-file-label {
-  color: white;
-  text-align: center;
-  padding-top: 10px;
-  text-transform: uppercase;
-  cursor: pointer;
-  height: 70px;
-  width: 200px;
-  background-color: DeepSkyBlue;
-  border: 2px solid DodgerBlue;
+.continue {
+  background-color: white;
+  border: 2px solid Brown;
   border-radius: 5px;
 }
 
@@ -351,7 +347,7 @@ code {
 
 .actions .description {
   width: 320px;
-  height: 60px;
+  height: 100px;
 }
 
 .skills-section {
@@ -367,6 +363,11 @@ code {
 .skills-title,
 .skill-points {
   text-align: center;
+}
+
+.skill-points span {
+  font-size: 24px;
+  color: DarkOrange;
 }
 
 .slills {
@@ -397,6 +398,7 @@ code {
   font-size: 30px;
   color: Gold;
   cursor: pointer;
+  user-select: none;
 }
 
 .strength {

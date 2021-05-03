@@ -1,4 +1,9 @@
 import React from 'react'
+import Skill from '../components/Skill'
+
+/*for skills lvl up, contains unicode star character variations*/
+const stars = ['\u{2730}', '\u{2729}', '\u{272C}', '\u{272E}', '\u{272F}']
+
 
 class Training extends React.Component {
   constructor() {
@@ -9,9 +14,10 @@ class Training extends React.Component {
       agility: 0,
       intelligence: 0,
       charisma: 0,
-      skillPoints: 0
+      skillPoints: 5
     }
     this.saveCharacter = this.saveCharacter.bind(this)
+
   }
 
   componentDidMount() {
@@ -43,6 +49,7 @@ class Training extends React.Component {
     localStorage.setItem('intelligence', intelligence)
     localStorage.setItem('charisma', charisma)
     localStorage.setItem('skillPoints', skillPoints)
+    alert('Персонаж успешно сохранён! Вы сможете продолжить сохраненную игру с помощью кнопки `Продолжить` на основном экране. Можете закрыть страницу или продолжить игру.')
   }
 
   checkLocal() {
@@ -50,9 +57,32 @@ class Training extends React.Component {
     console.log('localStorage length: ', localStorage.length)
   }
 
+  levelUp(e) {
+    if (stars.indexOf(e.target.textContent) < 4 && this.state.skillPoints > 0) {
+      e.target.textContent = stars[stars.indexOf(e.target.textContent) + 1]
+      this.setState((prevState) => {
+        return {
+          skillPoints: prevState.skillPoints - 1,
+        }
+      })
+    } else {
+      console.log('nah')
+    }
+  }
+
   render() {
-    /*const stars = ["&#10032;", "&#10025;", "&#10028;", "&#10030;", "&#10031;"]
-    const hmm = "&#10032;"*/
+    /*const stars = ["&#10032;", "&#10025;", "&#10028;", "&#10030;", "&#10031;"]*/
+
+
+
+
+    /*function levelUp() {
+      console.log(this.state)
+    }*/
+
+
+    /*const hehe = '\u{2729}'*/
+
     return (
       <div className="training-page">
         <h2 className="training-title">Теперь вы готовы проводить поединки и прокачивать скиллы!</h2>
@@ -152,7 +182,7 @@ class Training extends React.Component {
                   </div>
                   <div className="training-atribute charisma">
                     <p>Манипулирование</p>
-                    <p>&#10031;</p>
+                    <p className="idk" onClick={(e) => this.levelUp(e)}>{stars[0]}</p>
                   </div>
                 </div>
               </div>
