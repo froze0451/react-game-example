@@ -57,11 +57,13 @@ class CharacterCreation extends React.Component {
 
   storingCharacter() {
     const { name, strength, agility, intelligence, charisma } = this.state;
+    const health = this.state.strength + 3
     sessionStorage.setItem('name', name)
     sessionStorage.setItem('strength', strength)
     sessionStorage.setItem('agility', agility)
     sessionStorage.setItem('intelligence', intelligence)
     sessionStorage.setItem('charisma', charisma)
+    sessionStorage.setItem('health', health)
   }
 
   createCharacter() {
@@ -77,7 +79,8 @@ class CharacterCreation extends React.Component {
       alert("Для создания персонажа необходимо сначала дать ему имя")
     } else {
       this.storingCharacter()
-      alert("Персонаж успешно создан!")
+      alert("Персонаж успешно создан! Приключения начинаются!")
+      window.location.href = '/training'
     }
   }
 

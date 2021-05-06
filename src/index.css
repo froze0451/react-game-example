@@ -140,6 +140,7 @@ code {
 .points span {
   font-size: 20px;
   color: blue;
+  transition-property: 2s ease;
 }
 
 /*atributes*/
@@ -243,16 +244,17 @@ code {
 .training-content {
   margin-top: 15px;
   display: flex;
-  flex-direction: column;
-}
-
-.training-character {
-  display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.training-character h5 {
+.training-character {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.training-atributes-stuff h5 {
   text-align: center;
   margin-bottom: 10px;
 }
@@ -271,6 +273,12 @@ code {
   background-color: LimeGreen;
   border: 1px solid green;
   border-radius: 5px;
+}
+
+.training-atributes-stuff {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .training-atribute {
@@ -298,13 +306,14 @@ code {
 
 .training-second-row {
   display: flex;
-  flex-direction: row;
-  margin-top: 10px;
+  flex-direction: column;
+  width: 100%;
 }
 
 .character-name {
   text-align: center;
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .actions {
@@ -325,7 +334,6 @@ code {
   font-size: 24px;
   text-align: center;
   padding-top: 18px;
-
   cursor: pointer;
 }
 
@@ -347,21 +355,27 @@ code {
 
 .actions .description {
   width: 320px;
-  height: 100px;
+  height: 75px;
 }
 
 .skills-section {
-  margin-top: -40px;
-  margin-left: 20px;
+  margin-top: 10px;
 }
 
 .skills-content {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
 }
 
-.skills-title,
+.skills-title {
+  text-align: center;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+}
+
 .skill-points {
+  margin-bottom: 5px;
   text-align: center;
 }
 
@@ -391,7 +405,6 @@ code {
   border: 1px solid MediumPurple;
   border-radius: 4px;
   padding-right: 5px;
-  margin-left: 5px;
 }
 
 .skills div p:last-child {
@@ -415,4 +428,16 @@ code {
 
 .charisma {
   background-color: darkmagenta;
+}
+
+.idk {
+  animation: myAnime 1s both;
+}
+@keyframes myAnime {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
