@@ -1,12 +1,14 @@
 import React from "react"
 import Atribute from "../components/Atribute"
 
-/*import AtributeButton from '../components/AtributeButton'*/
-
-/*learning stuff
-import LearningStuff from '../components/LearningStuff'
-import learningData from "../data/learningData"
-stuff ends*/
+const descriptions = {
+  avatar: 'Это ваш доблестный рыцарь',
+  strength: `Параметр влияет на показатель жизненной силы. Величина базового параметра определяет максимальный уровень прокачки привязанных скиллов(максимум 5). К силе привязан скилл 'Атака'`,
+  agility: `Ловкость влияет на параметры уклонения и энергичности. К ловкости относятся скиллы 'Стелс' и 'Стрельба из лука'`,
+  intelligence: `Интеллект влияет на параметр энергичности. К интеллекту привязаны скиллы 'Обучаемость', 'Выживание' и 'Медицина'`,
+  charisma: `Харизма пока не определилась с объектом влияния. К ней относятся скиллы 'Запугивание', 'Проницательность', 'Внешний вид' и 'Манипулирование'`,
+  submit: 'Создать персонажа!'
+}
 
 class CharacterCreation extends React.Component {
   constructor() {
@@ -17,20 +19,25 @@ class CharacterCreation extends React.Component {
       agility: 0,
       intelligence: 0,
       charisma: 0,
-      name: "",
+      name: '',
+      description: 'Приветствую путник! Для начала введите имя и распределите очки между базовыми параметрами.'
     }
     this.plusPoint = this.plusPoint.bind(this)
     this.minusPoint = this.minusPoint.bind(this)
     this.storingCharacter = this.storingCharacter.bind(this)
     this.createCharacter = this.createCharacter.bind(this)
+    this.showDescription = this.showDescription.bind(this)
+    this.hideDescription = this.hideDescription.bind(this)
   }
 
-  plusPoint(atribute) {
+  plusPoint(atribute, e) {
     if (
       this.state.pointsToSpend < 12 &&
       this.state.pointsToSpend >= 0 &&
       this.state[atribute] > 0
     ) {
+      e.target.nextElementSibling.classList.toggle('booba')
+      e.target.nextElementSibling.classList.toggle('goomba')
       this.setState((prevState) => {
         return {
           pointsToSpend: prevState.pointsToSpend + 1,
@@ -40,8 +47,16 @@ class CharacterCreation extends React.Component {
     }
   }
 
-  minusPoint(atribute) {
+  minusPoint(atribute, e) {
     if (this.state.pointsToSpend > 0) {
+
+      if (!e.target.previousElementSibling.classList.contains('goomba') && !e.target.previousElementSibling.classList.contains('booba')) {
+        e.target.previousElementSibling.classList.add('booba')
+      } else {
+        e.target.previousElementSibling.classList.toggle('booba')
+        e.target.previousElementSibling.classList.toggle('goomba')
+      }
+
       this.setState((prevState) => {
         return {
           pointsToSpend: prevState.pointsToSpend - 1,
@@ -68,13 +83,9 @@ class CharacterCreation extends React.Component {
 
   createCharacter() {
     if (this.state.pointsToSpend > 0 && this.state.name === "") {
-      alert(
-        "Для создания персонажа необходимо сначала распределить очки между базовыми параметрами и дать имя персонажу"
-      )
+      alert("Для создания персонажа необходимо сначала распределить очки между базовыми параметрами и дать имя персонажу")
     } else if (this.state.pointsToSpend > 0 && this.state.name !== "") {
-      alert(
-        "Для создания персонажа необходимо сначала распределить очки между базовыми параметрами"
-      )
+      alert("Для создания персонажа необходимо сначала распределить очки между базовыми параметрами")
     } else if (this.state.pointsToSpend === 0 && this.state.name === "") {
       alert("Для создания персонажа необходимо сначала дать ему имя")
     } else {
@@ -84,6 +95,13 @@ class CharacterCreation extends React.Component {
     }
   }
 
+  showDescription(descriptionKey) {
+    this.setState({ description: descriptions[descriptionKey] })
+  }
+
+  hideDescription() {
+    this.setState({ description: '' })
+  }
 
   render() {
     return (
@@ -93,9 +111,9 @@ class CharacterCreation extends React.Component {
         </h2>
         <div className="character-creation">
           <div className="avatar-and-description">
-            <div className="avatar" title="Это ваш герой">
+            <div className="avatar" onMouseEnter={() => this.showDescription('avatar')} onMouseLeave={this.hideDescription}>
             </div>
-            <div className="description"></div>
+            <div className="description">{this.state.description}</div>
             <div className="change-page-anchors">
               <a href="/">Hа главную</a>
               <a href="/training">В тренинг</a>
@@ -121,6 +139,9 @@ class CharacterCreation extends React.Component {
                 atributeCount={this.state.strength}
                 plusPoint={this.plusPoint}
                 minusPoint={this.minusPoint}
+                showDescription={this.showDescription}
+                hideDescription={this.hideDescription}
+                descriptionKey="strength"
               ></Atribute>
               <Atribute
                 atributeTitle="Ловкость"
@@ -128,6 +149,9 @@ class CharacterCreation extends React.Component {
                 atributeCount={this.state.agility}
                 plusPoint={this.plusPoint}
                 minusPoint={this.minusPoint}
+                showDescription={this.showDescription}
+                hideDescription={this.hideDescription}
+                descriptionKey="agility"
               ></Atribute>
               <Atribute
                 atributeTitle="Интеллект"
@@ -135,6 +159,9 @@ class CharacterCreation extends React.Component {
                 atributeCount={this.state.intelligence}
                 plusPoint={this.plusPoint}
                 minusPoint={this.minusPoint}
+                showDescription={this.showDescription}
+                hideDescription={this.hideDescription}
+                descriptionKey="intelligence"
               ></Atribute>
               <Atribute
                 atributeTitle="Харизма"
@@ -142,6 +169,9 @@ class CharacterCreation extends React.Component {
                 atributeCount={this.state.charisma}
                 plusPoint={this.plusPoint}
                 minusPoint={this.minusPoint}
+                showDescription={this.showDescription}
+                hideDescription={this.hideDescription}
+                descriptionKey="charisma"
               ></Atribute>
             </div>
             <h5>Дополнительные параметры</h5>
@@ -151,11 +181,7 @@ class CharacterCreation extends React.Component {
                 <div className="additional-atribute-stats">
                   <p>3</p>
                   <p>&gt;</p>
-                  <p
-                    style={{
-                      color: this.state.strength > 0 ? "blue" : "black",
-                    }}
-                  >
+                  <p style={{ color: this.state.strength > 0 ? "blue" : "black" }}>
                     {3 + this.state.strength}
                   </p>
                 </div>
@@ -165,9 +191,7 @@ class CharacterCreation extends React.Component {
                 <div className="additional-atribute-stats">
                   <p>10</p>
                   <p>&gt;</p>
-                  <p
-                    style={{ color: this.state.agility > 0 ? "blue" : "black" }}
-                  >
+                  <p style={{ color: this.state.agility > 0 ? "blue" : "black" }}>
                     {10 + this.state.agility}
                   </p>
                 </div>
@@ -177,66 +201,18 @@ class CharacterCreation extends React.Component {
                 <div className="additional-atribute-stats">
                   <p>0</p>
                   <p>&gt;</p>
-                  <p
-                    style={{
-                      color:
-                        this.state.agility + this.state.intelligence > 0
-                          ? "blue"
-                          : "black",
-                    }}
-                  >
+                  <p style={{ color: this.state.agility + this.state.intelligence > 0 ? "blue" : "black" }}>
                     {this.state.agility + this.state.intelligence}
                   </p>
                 </div>
               </div>
             </div>
-            <button
-              className="submit-button"
-              /*onClick={() => console.log(this.state)}*/ /*onClick={() =>
-                this.createCharacter()*/ onClick={this.createCharacter}
-
-            >
-              Создать
-            </button>
+            <button className="submit-button" onMouseEnter={() => this.showDescription('submit')} onMouseLeave={this.hideDescription} onClick={this.createCharacter}>Создать</button>
           </div>
         </div>
-      </div >
+      </div>
     )
   }
 }
-
-/*  атрибуты jsx
-  <div className="atribute" title="Показатель силы вашего персонажа. Влияет на параметр жизненной силы">
-    <p>Сила</p>
-    <div className="atribute-button-section">
-      <button onClick={() => this.plusPoint("strength")}></button>
-      <p>{this.state.strength}</p>
-      <button onClick={() => this.minusPoint("strength")}></button>
-    </div>
-  </div>
-  <div className="atribute" title="Показатель ловкости вашего персонажа. Влияет на параметы уклонения и энергичности">
-    <p>Ловкость</p>
-    <div className="atribute-button-section">
-      <button onClick={() => this.plusPoint("agility")}></button>
-      <p>{this.state.agility}</p>
-      <button onClick={() => this.minusPoint("agility")}></button>
-    </div>
-  </div>
-  <div className="atribute">
-    <p>Интеллект</p>
-    <div className="atribute-button-section">
-      <button onClick={() => this.plusPoint("intelligence")}></button>
-      <p>{this.state.intelligence}</p>
-      <button onClick={() => this.minusPoint("intelligence")}></button>
-    </div>
-  </div>
-  <div className="atribute">
-    <p>Харизма</p>
-    <div className="atribute-button-section">
-      <button onClick={() => this.plusPoint("charisma")}></button>
-      <p>{this.state.charisma}</p>
-      <button onClick={() => this.minusPoint("charisma")}></button>
-    </div>
-  </div>*/
 
 export default CharacterCreation

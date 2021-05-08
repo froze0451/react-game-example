@@ -1,32 +1,6 @@
 import React from 'react'
 
 function Greetings() {
-
-  /* for uploaded json file with char stats*/
-  /*let uploadedStats
-  
-  function printFile(event) {
-    let file = event.target.files[0];
-    let reader = new FileReader();
-    reader.onload = function (event) {
-      uploadedStats = JSON.parse(event.target.result);
-      console.log(uploadedStats)
-    };
-    reader.readAsText(file);
-  }*/
-  /*const [uploadedStats, setUploadedStats] = useState()*/
-
-  /*
-    function printFile(event) {
-      let file = event.target.files[0];
-      let reader = new FileReader();
-      reader.onload = function (event) {
-        setUploadedStats(JSON.parse(event.target.result))
-        console.log(uploadedStats)
-      };
-      reader.readAsText(file);
-    }*/
-
   const styles = {}
 
   if (localStorage.length === 0) {

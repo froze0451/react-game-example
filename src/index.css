@@ -17,6 +17,7 @@ code {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  user-select: none;
 }
 
 .wrapper {
@@ -42,7 +43,6 @@ code {
 
 .greetings-anchor {
   text-decoration: none;
-  user-select: none;
   color: Gold;
   text-align: center;
   padding-top: 10px;
@@ -108,16 +108,6 @@ code {
   text-decoration: none;
   border-radius: 5px;
 }
-
-/*div[title]:hover::after {
-  content: attr(title);
-  position: fixed;
-  top: 395px;
-  left: 202px;
-  font-size: 1em;
-  color: purple;
-  width: 400px;
-}*/
 
 .creation {
   display: flex;
@@ -225,6 +215,9 @@ code {
   background-color: Bisque;
   border: 1px solid Chocolate;
   border-radius: 5px;
+  font-style: italic;
+  padding-top: 5px;
+  padding-left: 5px;
 }
 
 /*submit charachter*/
@@ -248,7 +241,7 @@ code {
   justify-content: space-between;
 }
 
-.training-character {
+.training-actions {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -264,6 +257,8 @@ code {
   height: 240px;
   width: 320px;
   background-size: cover;
+  /*height: 240px;
+  width: 320px;*/
 }
 
 .training-to-creation {
@@ -304,7 +299,7 @@ code {
   color: white;
 }
 
-.training-second-row {
+.training-parameters {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -313,7 +308,6 @@ code {
 .character-name {
   text-align: center;
   margin-bottom: 10px;
-  margin-top: 10px;
 }
 
 .actions {
@@ -327,24 +321,26 @@ code {
 }
 
 .save-progress {
-  height: 100px;
+  height: 60px; /*100px*/
   width: 160px;
   background: GoldenRod;
   border-radius: 15px;
   font-size: 24px;
   text-align: center;
-  padding-top: 18px;
+  padding-top: 12px;
+  /*padding-top: 18px;*/
   cursor: pointer;
 }
 
 .fight-button {
-  height: 100px;
+  height: 60px; /*100px*/
   width: 140px;
   background-color: Crimson;
   border-radius: 15px;
   font-size: 32px;
   text-align: center;
-  padding-top: 25px;
+  padding-top: 5px;
+  /*padding-top: 25px;*/
   color: DarkRed;
   cursor: pointer;
 }
@@ -355,11 +351,11 @@ code {
 
 .actions .description {
   width: 320px;
-  height: 75px;
+  height: 100px;
 }
 
 .skills-section {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .skills-content {
@@ -375,7 +371,7 @@ code {
 }
 
 .skill-points {
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   text-align: center;
 }
 
@@ -411,7 +407,6 @@ code {
   font-size: 30px;
   color: Gold;
   cursor: pointer;
-  user-select: none;
 }
 
 .strength {
@@ -430,14 +425,149 @@ code {
   background-color: darkmagenta;
 }
 
-.idk {
-  animation: myAnime 1s both;
+/*atribute change animation*/
+.booba {
+  animation: cool 0.2s forwards;
 }
-@keyframes myAnime {
+
+@keyframes cool {
   0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  25% {
+    opacity: 0.5;
+    transform: translate(100%, 0);
+  }
+  26% {
     opacity: 0;
+    transform: translate(-200%, 0);
+  }
+  50% {
+    opacity: 0.25;
+    transform: translate(-100%, 0);
+  }
+  75% {
+    opacity: 0.5;
+    transform: translate(-50%, 0);
   }
   100% {
     opacity: 1;
+    transform: translate(0, 0);
+    color: blue;
   }
 }
+
+.goomba {
+  color: red;
+  animation: pool 0.2s forwards;
+}
+
+@keyframes pool {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  25% {
+    opacity: 0.5;
+    transform: translate(100%, 0);
+  }
+  26% {
+    opacity: 0;
+    transform: translate(-200%, 0);
+  }
+  50% {
+    opacity: 0.25;
+    transform: translate(-100%, 0);
+  }
+  75% {
+    opacity: 0.5;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+    color: blue;
+  }
+}
+
+/*skill lvlup animation*/
+.timon {
+  animation: bob_dylan 0.3s ease-out;
+}
+
+@keyframes bob_dylan {
+  50% {
+    transform: scale(1.5, 1.5);
+    opacity: 0.25;
+  }
+  75% {
+    transform: scale(2, 2);
+    opacity: 0.5;
+  }
+  99% {
+    transform: scale(0.5, 0.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0.001, 0.001);
+    opacity: 1;
+  }
+}
+
+.pumbaa {
+  animation: morrison 0.3s ease-out;
+}
+
+@keyframes morrison {
+  50% {
+    transform: scale(1.5, 1.5);
+    opacity: 0.25;
+  }
+  75% {
+    transform: scale(2, 2);
+    opacity: 0.5;
+  }
+  99% {
+    transform: scale(0.5, 0.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0.001, 0.001);
+    opacity: 1;
+  }
+}
+
+/*
+.pop-in {
+  animation: hoshi 1s forwards;
+}
+
+@keyframes hoshi {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.pop-out {
+  animation: san-san 1s forwards;
+}
+
+@keyframes san-san {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+*/

@@ -1,32 +1,40 @@
 import React from 'react'
-import Skill from '../components/Skill'
+/*import Skill from '../components/Skill'*/
 
-/*for skills lvl up, contains unicode star character variations*/
-const stars = ['\u{2730}', '\u{2729}', '\u{272C}', '\u{272E}', '\u{272F}']
-
-
+const stars = ['\u{2730}', '\u{2729}', '\u{272B}', '\u{272C}', '\u{272E}', '\u{272F}']
+const lvls = ['Нетренированный', 'Новичок', 'Ученик', 'Адепт', 'Эксперт', 'Мастер']
+const descriptions = {
+  avatar: 'Ваш пушистый герой собственной персоной',
+  fight: `Драка! Победа принесёт очко для прокачки скиллов, поражение уменьшит показатель жизненной силы. Удачи!`,
+  save: `Нажмите для того чтобы сохранить персонажа и прогресс прокачки. Вы сможете продолжить игру в удобное для вас время.`,
+  atributes: `Значение задает порог прокачки скиллов(макс. 5). Вы можете определить привязку скиллов к параметрам по соотвествующим цветам.`,
+  name: 'Имя вашего персонажа'
+}
 
 class Training extends React.Component {
   constructor() {
     super()
     this.state = {
-      name: "",
+      name: '',
       strength: 0,
       agility: 0,
       intelligence: 0,
       charisma: 0,
       skillPoints: 0,
       health: 0,
-      skillLvls: { manipulation: '\u{2730}', appearance: '\u{2729}' }
-      /*skillLvls: ['\u{2730}', '\u{2729}', '\u{272C}']*/
+      skillLvls: {
+        attack: '\u{2730}', stealth: '\u{2730}', archery: '\u{2730}', learnability: '\u{2730}',
+        survival: '\u{2730}', medicine: '\u{2730}', intimidation: '\u{2730}', insight: '\u{2730}', appearance: '\u{2730}', manipulation: '\u{2730}'
+      },
+      description: `Пришло время поединков и тренировки. Для тренировки скиллов нужно добыть очки улучшения в поединках. Попробуйте нажать кнопку 'Драка!'`
     }
     this.saveCharacter = this.saveCharacter.bind(this)
     this.fight = this.fight.bind(this)
+    this.showDescription = this.showDescription.bind(this)
+    this.hideDescription = this.hideDescription.bind(this)
   }
 
   componentDidMount() {
-    const number = document.querySelectorAll('.skills-content .training-atribute')
-    console.log(number)
     if (localStorage.length !== 0) {
       this.setState({
         name: localStorage.getItem('name'),
@@ -35,7 +43,8 @@ class Training extends React.Component {
         intelligence: Number(localStorage.getItem('intelligence')),
         charisma: Number(localStorage.getItem('charisma')),
         skillPoints: Number(localStorage.getItem('skillPoints')),
-        health: Number(localStorage.getItem('health'))
+        health: Number(localStorage.getItem('health')),
+        skillLvls: JSON.parse(localStorage.getItem("skillLvls"))
       })
     } else {
       this.setState({
@@ -50,9 +59,24 @@ class Training extends React.Component {
     }
   }
 
+  showDescription(descriptionKey) {
+    this.setState({ description: descriptions[descriptionKey] })
+  }
+
+  skillDescription(e) {
+    const index = stars.indexOf(e.target.textContent)
+    this.setState({
+      description: `Уровень скилла ${e.target.previousElementSibling.textContent} ${index}: ${lvls[index]}`
+    })
+  }
+
+  hideDescription() {
+    this.setState({ description: '' })
+  }
 
   saveCharacter() {
     const { name, strength, agility, intelligence, charisma, skillPoints, health } = this.state;
+    /*const skillLvls = this.state.skillLvls*/
     localStorage.setItem('name', name)
     localStorage.setItem('strength', strength)
     localStorage.setItem('agility', agility)
@@ -60,40 +84,28 @@ class Training extends React.Component {
     localStorage.setItem('charisma', charisma)
     localStorage.setItem('skillPoints', skillPoints)
     localStorage.setItem('health', health)
-    alert('Персонаж и прогресс успешно сохранены! Вы сможете продолжить сохраненную игру с помощью кнопки `Продолжить` на основном экране.')
+    localStorage.setItem("skillLvls", JSON.stringify(this.state.skillLvls))
+    alert('Персонаж и прогресс успешно сохранены! Вы сможете продолжить сохраненную игру с помощью кнопки `Продолжить` на основном экране либо перезайдя на данную страницу.')
   }
 
-  /*checkLocal() {
-    console.log('sessionStorage length: ', sessionStorage.length)
-    console.log('localStorage length: ', localStorage.length)
-  }*/
-
-  levelUp(e) {
-    console.log(this.state)
-
-    if (stars.indexOf(e.target.textContent) < 4 && this.state.skillPoints > 0) {
-      /*e.target.classList.remove('idk')
-      e.target.classList.add('idk')*/
-      e.target.textContent = stars[stars.indexOf(e.target.textContent) + 1]
-
-      this.setState((prevState) => {
-        return {
-          skillPoints: prevState.skillPoints - 1,
-        }
-      })
-
-    } else {
-      console.log('nah')
-    }
-  }
-
-  skillUp(skill) {
-    const stars = ['\u{2730}', '\u{2729}', '\u{272C}', '\u{272E}', '\u{272F}']
-    this.setState((prevState) => {
-      return {
-        skillLvls[skill]: stars[stars.indexOf(prevState.skillLvls[skill]) + 1]
+  skillUp(skill, e) {
+    if (stars.indexOf(this.state.skillLvls[skill]) < 5 && this.state.skillPoints > 0) {
+      if (!e.target.classList.contains('timon') && !e.target.classList.contains('pumbaa')) {
+        e.target.classList.add('timon')
+      } else {
+        e.target.classList.toggle('timon')
+        e.target.classList.toggle('pumbaa')
       }
-    })
+      this.setState(prevState => ({
+        skillPoints: prevState.skillPoints - 1,
+        skillLvls: {
+          ...prevState.skillLvls,
+          [skill]: stars[stars.indexOf(prevState.skillLvls[skill]) + 1]
+        },
+        description: `Уровень скилла ${e.target.previousElementSibling.textContent} ${stars.indexOf(prevState.skillLvls[skill]) + 1}: ${lvls[stars.indexOf(prevState.skillLvls[skill]) + 1]}`
+      }))
+      /*console.log(e.target.parentElement.classList.contains('strength'))*/
+    }
   }
 
   fight() {
@@ -127,22 +139,22 @@ class Training extends React.Component {
         <h2 className="training-title">Теперь вы готовы проводить поединки и прокачивать скиллы!</h2>
         <div className="training-content">
           <a className="training-to-creation" href="/creation">Вернуться к созданию</a>
-          <div className="training-character">
-            <div className="training-avatar"></div>
+          <div className="training-actions">
+            <div className="training-avatar" onMouseEnter={() => this.showDescription('avatar')} onMouseLeave={this.hideDescription}></div>
             <div className="actions">
-              <h3 className="character-name">{this.state.name}</h3>
+              <h3 onMouseEnter={() => this.showDescription('name')} onMouseLeave={this.hideDescription} className="character-name">{this.state.name}</h3>
               <div className="fighting">
-                <div className="save-progress" onClick={this.saveCharacter}>СОХРАНИТЬ ПРОГРЕСС</div>
-                <div className="fight-button" onClick={this.fight}>ДРАКА!</div>
+                <div className="save-progress" onMouseEnter={() => this.showDescription('save')} onMouseLeave={this.hideDescription} onClick={this.saveCharacter}>СОХРАНИТЬ</div>
+                <div className="fight-button" onMouseEnter={() => this.showDescription('fight')} onMouseLeave={this.hideDescription} onClick={this.fight}>ДРАКА!</div>
               </div>
-              <div className="description"></div>
+              <div className="description"><p>{this.state.description}</p></div>
             </div>
             {/*  */}
 
           </div>
-          <div className="training-second-row">
+          <div className="training-parameters">
             <div className="training-atributes-stuff">
-              <div className="training-atributes">
+              <div className="training-atributes" onMouseEnter={() => this.showDescription('atributes')} onMouseLeave={this.hideDescription}>
                 <h5>Базовые параметры</h5>
                 <div className="training-atribute strength">
                   <p>Сила</p>
@@ -188,49 +200,48 @@ class Training extends React.Component {
                 <div className="skills-first-column skills">
                   <div className="training-atribute strength">
                     <p>Атака</p>
-                    <p onClick={(e) => this.levelUp(e)}>{stars[0]}</p>
+                    <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('attack', e)}>{this.state.skillLvls.attack}</p>
                   </div>
                   <div className="training-atribute agility">
                     <p>Стелс</p>
-                    <p onClick={(e) => this.levelUp(e)}>{stars[0]}</p>
+                    <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('stealth', e)}>{this.state.skillLvls.stealth}</p>
                   </div>
                   <div className="training-atribute agility">
                     <p>Стрельба из лука</p>
-                    <p onClick={(e) => this.levelUp(e)}>{stars[0]}</p>
+                    <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('archery', e)}>{this.state.skillLvls.archery}</p>
                   </div>
                   <div className="training-atribute intelligence">
                     <p>Обучаемость</p>
-                    <p onClick={(e) => this.levelUp(e)}>{stars[0]}</p>
+                    <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('learnability', e)}>{this.state.skillLvls.learnability}</p>
                   </div>
                   <div className="training-atribute intelligence">
                     <p>Выживание</p>
-                    <p onClick={(e) => this.levelUp(e)}>{stars[0]}</p>
+                    <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('survival', e)}>{this.state.skillLvls.survival}</p>
                   </div>
                 </div>
                 <div className="skills-second-column skills">
                   <div className="training-atribute intelligence">
                     <p>Медицина</p>
-                    <p onClick={(e) => this.levelUp(e)}>{stars[0]}</p>
+                    <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('medicine', e)}>{this.state.skillLvls.medicine}</p>
                   </div>
                   <div className="training-atribute charisma">
                     <p>Запугивание</p>
-                    <p onClick={(e) => this.levelUp(e)}>{stars[0]}</p>
+                    <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('intimidation', e)}>{this.state.skillLvls.intimidation}</p>
                   </div>
                   <div className="training-atribute charisma">
                     <p>Проницательность</p>
-                    <p onClick={(e) => this.levelUp(e)}>{this.state.skillLvls[2]}</p>
+                    <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('insight', e)}>{this.state.skillLvls.insight}</p>
                   </div>
                   <div className="training-atribute charisma">
                     <p>Внешний вид</p>
-                    <p onClick={(e) => this.levelUp(e)}>{this.state.skillLvls.appearance}</p>
+                    <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('appearance', e)}>{this.state.skillLvls.appearance}</p>
                   </div>
                   <div className="training-atribute charisma">
                     <p>Манипулирование</p>
-                    <p className="idk" onClick={(e) => this.levelUp(e)}>{this.state.skillLvls.manipulation}</p>
+                    <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('manipulation', e)}>{this.state.skillLvls.manipulation}</p>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
