@@ -114,10 +114,6 @@ class CharacterCreation extends React.Component {
             <div className="avatar" onMouseEnter={() => this.showDescription('avatar')} onMouseLeave={this.hideDescription}>
             </div>
             <div className="description">{this.state.description}</div>
-            <div className="change-page-anchors">
-              <a href="/">Hа главную</a>
-              <a href="/training">В тренинг</a>
-            </div>
           </div>
           <div className="creation">
             <h5>Имя</h5>

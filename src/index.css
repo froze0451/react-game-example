@@ -137,6 +137,7 @@ code {
 .atributes {
   display: flex;
   flex-direction: column;
+  margin-bottom: 5px;
 }
 
 .atribute {
@@ -181,6 +182,10 @@ code {
 }
 
 /*additional atributes*/
+.additional-atributes {
+  margin-top: 5px;
+}
+
 .additional-atribute {
   display: flex;
   flex-direction: row;
@@ -210,7 +215,7 @@ code {
 /*description*/
 .description {
   margin-top: 10px;
-  height: 100px;
+  height: 120px;
   width: 400px;
   background-color: Bisque;
   border: 1px solid Chocolate;
@@ -226,8 +231,8 @@ code {
   color: white;
   font-size: 20px;
   margin-top: 10px;
-  height: 50px;
-  width: 120px;
+  height: 40px; /*50px*/
+  width: 150px; /*120px*/
   background-color: LimeGreen;
   border: 1px solid green;
   border-radius: 5px;
@@ -289,6 +294,10 @@ code {
 }
 
 .training-atribute p:first-child {
+  margin: 0 auto;
+}
+
+.skills div p:first-child {
   margin: 0 auto;
 }
 
@@ -380,13 +389,7 @@ code {
   color: DarkOrange;
 }
 
-.slills {
-  display: flex;
-  flex-direction: row;
-}
-
-.skills-first-column,
-.skills-second-column {
+.skills {
   display: flex;
   flex-direction: column;
 }
