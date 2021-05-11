@@ -3,12 +3,15 @@ import React from 'react'
 
 const stars = ['\u{2730}', '\u{2729}', '\u{272B}', '\u{272C}', '\u{272E}', '\u{272F}']
 const lvls = ['Нетренированный', 'Новичок', 'Ученик', 'Адепт', 'Эксперт', 'Мастер']
+const attributeDependencies = ['strength', 'agility', 'intelligence', 'charisma']
+const atributeTranslated = ['Сила', 'Ловкость', 'Интеллект', 'Харизма']
 const descriptions = {
   avatar: 'Ваш пушистый герой собственной персоной',
   fight: `Драка! Победа принесёт очко для прокачки скиллов, поражение уменьшит показатель жизненной силы. Удачи!`,
   save: `Нажмите для того чтобы сохранить персонажа и прогресс прокачки. Вы сможете продолжить игру в удобное для вас время.`,
   atributes: `Значение задает порог прокачки скиллов(макс. 5). Вы можете определить привязку скиллов к параметрам по соотвествующим цветам.`,
-  name: 'Имя вашего персонажа'
+  name: 'Имя вашего персонажа',
+  skill: 'Каждый скилл привязан к базовому параметру и не может быть прокачан сверх значения этого параметра. Привязку можно определить по цвету'
 }
 
 class Training extends React.Component {
@@ -20,7 +23,7 @@ class Training extends React.Component {
       agility: 0,
       intelligence: 0,
       charisma: 0,
-      skillPoints: 0,
+      skillPoints: 2,
       health: 0,
       skillLvls: {
         attack: '\u{2730}', stealth: '\u{2730}', archery: '\u{2730}', learnability: '\u{2730}',
@@ -32,6 +35,7 @@ class Training extends React.Component {
     this.fight = this.fight.bind(this)
     this.showDescription = this.showDescription.bind(this)
     this.hideDescription = this.hideDescription.bind(this)
+    this.skillUp = this.skillUp.bind(this)
   }
 
   componentDidMount() {
@@ -53,7 +57,6 @@ class Training extends React.Component {
         agility: Number(sessionStorage.getItem('agility')),
         intelligence: Number(sessionStorage.getItem('intelligence')),
         charisma: Number(sessionStorage.getItem('charisma')),
-        skillPoints: Number(sessionStorage.getItem('skillPoints')),
         health: Number(sessionStorage.getItem('health'))
       })
     }
@@ -89,7 +92,20 @@ class Training extends React.Component {
   }
 
   skillUp(skill, e) {
-    if (stars.indexOf(this.state.skillLvls[skill]) < 5 && this.state.skillPoints > 0) {
+    /*вычисление атрибута к которому привязан скилл по классам компонента skill*/
+    let dependentAtributeValue;
+    let dependentAtributeName;
+    for (let i = 0; i < attributeDependencies.length; i++) {
+      if (e.target.parentElement.classList.contains(attributeDependencies[i])) {
+        dependentAtributeName = atributeTranslated[i]
+        dependentAtributeValue = this.state[attributeDependencies[i]]
+      }
+    }
+
+    if (stars.indexOf(this.state.skillPoints > 0 && this.state.skillLvls[skill]) >= dependentAtributeValue) {
+      alert(`Уровень прокачки скилла '${e.target.previousElementSibling.textContent}' не может превышать показатель параметра ${dependentAtributeName}: ${dependentAtributeValue}`)
+    } else if (stars.indexOf(this.state.skillLvls[skill]) < 5 && this.state.skillPoints > 0 && stars.indexOf(this.state.skillLvls[skill]) < dependentAtributeValue) {
+      console.log()
       if (!e.target.classList.contains('timon') && !e.target.classList.contains('pumbaa')) {
         e.target.classList.add('timon')
       } else {
@@ -104,7 +120,7 @@ class Training extends React.Component {
         },
         description: `Уровень скилла ${e.target.previousElementSibling.textContent} ${stars.indexOf(prevState.skillLvls[skill]) + 1}: ${lvls[stars.indexOf(prevState.skillLvls[skill]) + 1]}`
       }))
-      /*console.log(e.target.parentElement.classList.contains('strength'))*/
+
     }
   }
 
@@ -124,7 +140,7 @@ class Training extends React.Component {
         }
       })
       if (this.state.health === 1) {
-        alert(`${this.state.name} доблестно пал в бою =( Game Over!`)
+        alert(`${this.state.name} доблестно пал в бою =( Game Over!\n\nСовет: Высокое значение параметра силы положительно влияет на живучесть персонажа`)
         localStorage.clear()
         window.location.href = '/'
       } else {
@@ -199,45 +215,45 @@ class Training extends React.Component {
               <div className="skills-content">
                 <div className="skills-first-column skills">
                   <div className="training-atribute strength">
-                    <p>Атака</p>
+                    <p onMouseEnter={() => this.showDescription('skill')} onMouseLeave={this.hideDescription}>Атака</p>
                     <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('attack', e)}>{this.state.skillLvls.attack}</p>
                   </div>
                   <div className="training-atribute agility">
-                    <p>Стелс</p>
+                    <p onMouseEnter={() => this.showDescription('skill')} onMouseLeave={this.hideDescription}>Стелс</p>
                     <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('stealth', e)}>{this.state.skillLvls.stealth}</p>
                   </div>
                   <div className="training-atribute agility">
-                    <p>Стрельба из лука</p>
+                    <p onMouseEnter={() => this.showDescription('skill')} onMouseLeave={this.hideDescription}>Стрельба из лука</p>
                     <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('archery', e)}>{this.state.skillLvls.archery}</p>
                   </div>
                   <div className="training-atribute intelligence">
-                    <p>Обучаемость</p>
+                    <p onMouseEnter={() => this.showDescription('skill')} onMouseLeave={this.hideDescription}>Обучаемость</p>
                     <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('learnability', e)}>{this.state.skillLvls.learnability}</p>
                   </div>
                   <div className="training-atribute intelligence">
-                    <p>Выживание</p>
+                    <p onMouseEnter={() => this.showDescription('skill')} onMouseLeave={this.hideDescription}>Выживание</p>
                     <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('survival', e)}>{this.state.skillLvls.survival}</p>
                   </div>
                 </div>
                 <div className="skills-second-column skills">
                   <div className="training-atribute intelligence">
-                    <p>Медицина</p>
+                    <p onMouseEnter={() => this.showDescription('skill')} onMouseLeave={this.hideDescription}>Медицина</p>
                     <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('medicine', e)}>{this.state.skillLvls.medicine}</p>
                   </div>
                   <div className="training-atribute charisma">
-                    <p>Запугивание</p>
+                    <p onMouseEnter={() => this.showDescription('skill')} onMouseLeave={this.hideDescription}>Запугивание</p>
                     <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('intimidation', e)}>{this.state.skillLvls.intimidation}</p>
                   </div>
                   <div className="training-atribute charisma">
-                    <p>Проницательность</p>
+                    <p onMouseEnter={() => this.showDescription('skill')} onMouseLeave={this.hideDescription}>Проницательность</p>
                     <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('insight', e)}>{this.state.skillLvls.insight}</p>
                   </div>
                   <div className="training-atribute charisma">
-                    <p>Внешний вид</p>
+                    <p onMouseEnter={() => this.showDescription('skill')} onMouseLeave={this.hideDescription}>Внешний вид</p>
                     <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('appearance', e)}>{this.state.skillLvls.appearance}</p>
                   </div>
                   <div className="training-atribute charisma">
-                    <p>Манипулирование</p>
+                    <p onMouseEnter={() => this.showDescription('skill')} onMouseLeave={this.hideDescription}>Манипулирование</p>
                     <p onMouseEnter={(e) => this.skillDescription(e)} onMouseLeave={this.hideDescription} onClick={(e) => this.skillUp('manipulation', e)}>{this.state.skillLvls.manipulation}</p>
                   </div>
                 </div>
