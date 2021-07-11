@@ -1,3 +1,3 @@
 # 3-page React game prototype
-# Deploy:
+# Deploy on gh-pages:
 # https://froze0451.github.io/react-app-1/
